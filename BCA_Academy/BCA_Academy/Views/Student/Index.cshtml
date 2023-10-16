@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BCA_Academy.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center p-2 bg-secondary text-light">Student Informations</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a href="@Url.Action("Create","Student")" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i> Addmission</a>
+</div>
+
+<div>
+    @foreach (var student in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    <img src="@student.Picture" width="32" />
+                    <label class="me-2">
+                        <b>Student Name : </b>
+                        @Html.DisplayFor(x => student.StudentName)
+                    </label>
+                    <label class="me-2">
+                        <b>Birth Date : </b>
+                        @Html.DisplayFor(x => student.BirthDate)
+                    </label>
+                    <label class="me-2">
+                        <b>Age : </b>
+                        @Html.DisplayFor(x => student.Age)
+                    </label>
+                </div>
+                <div>
+                    <a href="@Url.Action("Edit", "Student")" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="@Url.Action("Delete", "Student")" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                </div>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,27 @@
+CREATE DATABASE BCA_Academy
+GO
+
+USE BCA_Academy
+GO
+
+CREATE TABLE Student
+(
+	StudentId INT PRIMARY KEY IDENTITY,
+	StudentName VARCHAR(50) NOT NULL,
+	BirthDate DATE NOT NULL,
+	Age INT NOT NULL,
+	Picture VARCHAR(MAX) NOT NULL,
+	MaritalStatus BIT NOT NULL
+)
+CREATE TABLE Subject
+(
+	SubjectId INT PRIMARY KEY IDENTITY,
+	SubjectName VARCHAR(50) NOT NULL
+)
+
+CREATE TABLE AdmissionEntry
+(
+	AdmissionEntryId INT PRIMARY KEY IDENTITY,
+	StudentId INT REFERENCES Student(StudentId) NOT NULL,
+	SubjectId INT REFERENCES Subject(SubjectId) NOT NULL
+)

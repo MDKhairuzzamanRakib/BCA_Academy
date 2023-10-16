@@ -1,0 +1,11 @@
+﻿@model BCA_Academy.Models.Subject
+
+<div class="row mb-2">
+    <div class="col-10">
+        @Html.DropDownListFor(x=>x.SubjectId,ViewBag.subjects as 
+       SelectList,"--Select--", new {@class="form-control"})
+    </div>
+    <div class="col-2">
+        <a href="#" id="btnDeleteSubject" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+    </div>
+</div>
