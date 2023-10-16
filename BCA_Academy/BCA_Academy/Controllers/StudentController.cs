@@ -12,7 +12,7 @@ namespace BCA_Academy.Controllers
 {
     public class StudentController : Controller
     {
-        BCA_AcademyDBContext db = new BCA_AcademyDBContext();
+    AcademyEntities db = new AcademyEntities();
         public ActionResult Index()
         {
             var students = db.Students.Include(x=>x.AdmissionEntries.Select(b=>b.Subject)).OrderByDescending(x=>x.StudentId).ToList();

@@ -15,8 +15,8 @@ namespace BCA_Academy.Models
     public partial class AdmissionEntry
     {
         public int AdmissionEntryId { get; set; }
-        public int StudentId { get; set; }
-        public int SubjectId { get; set; }
+        public Nullable<int> StudentId { get; set; }
+        public Nullable<int> SubjectId { get; set; }
     
         public virtual Student Student { get; set; }
         public virtual Subject Subject { get; set; }

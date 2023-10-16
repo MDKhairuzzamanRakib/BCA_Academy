@@ -13,10 +13,10 @@ namespace BCA_Academy.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BCA_AcademyDBContext : DbContext
+    public partial class AcademyEntities : DbContext
     {
-        public BCA_AcademyDBContext()
-            : base("name=BCA_AcademyDBContext")
+        public AcademyEntities()
+            : base("name=AcademyEntities")
         {
         }
     
