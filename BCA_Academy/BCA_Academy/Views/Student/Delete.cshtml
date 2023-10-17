@@ -1,6 +1,6 @@
 ﻿@model BCA_Academy.Models.ViewModels.StudentVM
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Delete";
 }
 
 @using (Ajax.BeginForm(new AjaxOptions
@@ -28,7 +28,7 @@
                     <div class="row mb-2">
                         <div class="col-3 col-form-label">Birth Date</div>
                         <div class="col-7">
-                            @Html.TextBoxFor(x => x.BirthDate,"{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.TextBoxFor(x => x.BirthDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -79,7 +79,7 @@
 
     <div class="d-flex justify-content-between">
         <a href="@Url.Action("Index","Student")" class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-left"></i> Back to List</a>
-        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-upload"></i> Update</button>
+        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
     </div>
 }
 

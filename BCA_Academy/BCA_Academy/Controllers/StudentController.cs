@@ -137,5 +137,48 @@ namespace BCA_Academy.Controllers
             return PartialView("_error");
 
         }
+
+        public ActionResult Delete(int id)
+        {
+            Student student = db.Students.First(x => x.StudentId == id);
+
+            var studentSubject = db.AdmissionEntries.Where(x => x.StudentId == id).ToList();
+            StudentVM studentVM = new StudentVM()
+            {
+                StudentId = student.StudentId,
+                StudentName = student.StudentName,
+                BirthDate = student.BirthDate,
+                Age = student.Age,
+                Picture = student.Picture,
+                MaritalStatus = student.MaritalStatus,
+            };
+
+            if (studentSubject.Count>0)
+            {
+                foreach (var item in studentSubject)
+                {
+                    studentVM.SubjectList.Add(item.SubjectId);
+                }
+            }
+            return View(studentVM);
+
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int? id)
+        {
+            Student student = db.Students.Find(id);
+            AdmissionEntry admissionEntry = db.AdmissionEntries.First(x => x.StudentId == id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            db.Entry(student).State = EntityState.Deleted;
+            db.Entry(admissionEntry).State = EntityState.Deleted;
+            db.SaveChanges();
+
+            return PartialView("_success");
+        }
+
     }
 }
