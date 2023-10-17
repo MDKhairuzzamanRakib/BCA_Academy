@@ -67,5 +67,75 @@ namespace BCA_Academy.Controllers
             }
             return PartialView("_error");
         }
+
+        public ActionResult Edit(int? id)
+        {
+            Student student = db.Students.First(x => x.StudentId == id);
+            var studentSubject = db.AdmissionEntries.Where(x => x.StudentId == id).ToList();
+
+            StudentVM studentVM = new StudentVM()
+            {
+                StudentId = student.StudentId,
+                StudentName = student.StudentName,
+                BirthDate = student.BirthDate,
+                Age = student.Age,
+                Picture = student.Picture,
+                MaritalStatus = student.MaritalStatus,
+            };
+            Session["image"] = student.Picture;
+            if (studentSubject.Count()>0)
+            {
+                foreach (var item in studentSubject)
+                {
+                    studentVM.SubjectList.Add(item.SubjectId);
+                }
+            }
+            return View(studentVM);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(StudentVM studentVM, int[] subjectId)
+        {
+            if (ModelState.IsValid)
+            {
+                Student student = new Student()
+                {
+                    StudentId = studentVM.StudentId,
+                    StudentName = studentVM.StudentName,
+                    BirthDate = studentVM.BirthDate,
+                    Age = studentVM.Age,
+                    MaritalStatus = studentVM.MaritalStatus,
+                };
+                HttpPostedFileBase file = studentVM.PictureFile;
+                if (file != null)
+                {
+                    string filePath = Path.Combine(
+                        "/Images/", Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                    file.SaveAs(Server.MapPath(filePath));
+                    student.Picture = filePath;
+                }
+
+                var subjectEntry = db.AdmissionEntries.Where(x => x.StudentId == student.StudentId).ToList();
+
+                foreach (var item in subjectEntry)
+                {
+                    db.AdmissionEntries.Remove(item);
+                }
+                foreach (var item in subjectId)
+                {
+                    AdmissionEntry admissionEntry = new AdmissionEntry()
+                    {
+                        StudentId = student.StudentId,
+                        SubjectId = item
+                    };
+                    db.AdmissionEntries.Add(admissionEntry);
+                }
+                db.Entry(student).State= EntityState.Modified;
+                db.SaveChanges();
+                return PartialView("_success");
+            }
+            return PartialView("_error");
+
+        }
     }
 }

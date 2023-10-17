@@ -1,0 +1,94 @@
+﻿@model BCA_Academy.Models.ViewModels.StudentVM
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Ajax.BeginForm(new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    OnComplete = "clearAll",
+    UpdateTargetId = "msg"
+}))
+{
+    @Html.HiddenFor(x => x.StudentId);
+    <div class="row m-3">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    Student Informations
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-3 col-form-label">Student Name</div>
+                        <div class="col-7">
+                            @Html.TextBoxFor(x => x.StudentName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3 col-form-label">Birth Date</div>
+                        <div class="col-7">
+                            @Html.TextBoxFor(x => x.BirthDate,"{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3 col-form-label">Age</div>
+                        <div class="col-7">
+                            @Html.TextBoxFor(x => x.Age, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3 col-form-label">Picture</div>
+                        <div class="col-7">
+                            @Html.TextBoxFor(x => x.PictureFile, new { @class = "form-control", type = "file" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3 col-form-label">Marital Status</div>
+                        <div class="col-7 mt-2">
+                            @Html.CheckBoxFor(x => x.MaritalStatus)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    Subject List
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-end">
+                        <a href="" id="btnPlus" class="btn btn-warning btn-sm mb-3"><i class="fa fa-plus-circle"></i> Add</a>
+                    </div>
+                    <div id="subjectContainer">
+                        @foreach (var item in Model.SubjectList)
+                        {
+                            @Html.Action("AddNewSubject", "Student", new { id = item });
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div id="msg" class="display-6"></div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="@Url.Action("Index","Student")" class="btn btn-primary btn-sm"><i class="fa fa-arrow-circle-left"></i> Back to List</a>
+        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Save</button>
+    </div>
+}
+
+@section scripts {
+    <script>
+        $("#form0").attr("enctype", "multipart/form-data")
+        function clearAll() {
+            $("#form0").trigger("reset");
+        }
+    </script>
+}
+

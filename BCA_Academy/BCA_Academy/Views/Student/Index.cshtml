@@ -30,12 +30,28 @@
                     </label>
                 </div>
                 <div>
-                    <a href="@Url.Action("Edit", "Student")" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="@Url.Action("Delete", "Student")" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="@Url.Action("Edit", "Student", new {id=student.StudentId})" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                    <a href="@Url.Action("Delete", "Student", new {id=student.StudentId})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
                 </div>
             </div>
             <div class="card-body">
-
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Subject Id</th>
+                            <th>Subject Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in student.AdmissionEntries)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(x => item.Subject.SubjectId)</td>
+                                <td>@Html.DisplayFor(x => item.Subject.SubjectName)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     }
